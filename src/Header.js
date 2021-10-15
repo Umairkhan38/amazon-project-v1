@@ -11,6 +11,7 @@ function Header() {
             <Link to="/">
             <img className="header--logo" src="http://pngimg.com/uploads/amazon/amazon_PNG11.png" alt="amazon" />
             </Link>
+            
             <div className="header--locationIcon">
                 <LocationOnOutlinedIcon />
             </div>
