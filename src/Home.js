@@ -5,7 +5,7 @@ function Home() {
     return (
     <div className="Home">
     <div className="home--container">
-        <img className="home--image" src="https://m.media-amazon.com/images/I/71UhgZQzskL._SX3000_.jpg" alt="" />
+        <img className="home--image" src="https://m.media-amazon.com/images/I/61oybxyYQIL._SX3000_.jpg" alt="" />
         
         <div className="home--row">
         <Product 

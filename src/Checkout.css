@@ -1,20 +1,23 @@
 .checkout{
     display:flex;
-    background-color: bisque;
+    background-color: #E7E0F5;
     height:max-content;
     padding:20px;
 }
 .checkout--title{
-    border-bottom: 1px solid black;
-padding:10px;
+    border: 2px solid #d6d9df;
+    padding: 18px;
+    background-color: #e6f3ff;
+    color:cornflowerblue;
+
 }
 .checkout--left{
-background-color:white;
+background-color:#E7E0F5;
 }
 .checkout--right{
-    background-color:aqua;
+    background-color:#735893d4;
+    margin-left: 2px;
 }
 .checkout--adv{
     width:100%;
-    margin-bottom:10px;
 }
