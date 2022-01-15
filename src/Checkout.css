@@ -15,8 +15,9 @@
 background-color:#E7E0F5;
 }
 .checkout--right{
-    background-color:#735893d4;
+    background-color:#7a99e7d4;
     margin-left: 2px;
+    border-radius:5px;
 }
 .checkout--adv{
     width:100%;

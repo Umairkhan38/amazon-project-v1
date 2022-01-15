@@ -5,10 +5,16 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import { Link } from 'react-router-dom';
 import {useStateValue} from './StateProvider';
+import {auth} from './Firebase';
 
 function Header() {
-    const [{cart},dispatch]=useStateValue();
+    const [{cart,user},dispatch]=useStateValue();
 
+        const handleAuthentication=()=>{
+            if(user){
+                auth.signOut();
+            }
+        }
     return (
         <div className="header">
             <Link to="/">
@@ -20,7 +26,7 @@ function Header() {
             </div>
             <div className="header--option">
                 <span className="header--optionLineOne">
-                    Hello
+                    Hello,<br/>{!user ? "":user.email}
                 </span>
                 <span className="header--optionLineTwo">
                     Select Your Location
@@ -39,10 +45,10 @@ function Header() {
             </div>
 
             <div className="header--nav">
-                <Link to="/login">
-                <div className="header--option">
-                    <span className="header--optionLineOne">Hello Guest</span>
-                    <span className="header--optionLineTwo"> Sign In</span>
+                <Link to={!user && "/login"}>
+                <div onClick={handleAuthentication}className="header--option">
+                    <span className="header--optionLineOne">Hello,<br/>{!user?"Guest":user.email}</span>
+                    <span className="header--optionLineTwo">{user?"Sign Out":"Sign In"}</span>
                 </div>
                 </Link>
                 

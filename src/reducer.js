@@ -1,5 +1,6 @@
 export const initialState = {
     cart: [],
+    user:null
 };
 
 //Selector:
@@ -27,11 +28,16 @@ const reducer = (state, action) => {
                      console.warn("Your Cart is Empty");           
                 }
                 
-                
                 return{
                 ...state,
                 cart:newcart,
-                };        
+                };
+                case 'SET_USER':
+                return{
+                    ...state,
+                    user:action.user
+                };
+
                     default:
             return state;
     }
