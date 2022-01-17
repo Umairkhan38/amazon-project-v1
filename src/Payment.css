@@ -1,0 +1,22 @@
+.payment{
+    background-color:#dfebf1;
+}
+
+.payment--container {
+    text-align: center;
+    padding: 10px;
+    font-weight: 400;
+    background-color: aliceblue;
+    border-bottom: 1px solid lightgray;
+}
+
+.payment--section{
+    display: flex;
+    padding: 20px;
+    border-bottom: 1px solid lightgrey;
+    margin: 0 20px
+}
+
+.payment--address{
+    flex: 0.2;
+}
