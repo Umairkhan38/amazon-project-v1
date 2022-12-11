@@ -5,7 +5,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import { Link } from 'react-router-dom';
 import {useStateValue} from './StateProvider';
-import {auth} from './Firebase';
+import {auth} from './Firebase.js';
 
 function Header() {
     const [{cart,user},dispatch]=useStateValue();

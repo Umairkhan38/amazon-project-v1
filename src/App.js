@@ -5,7 +5,7 @@ import Header from './Header';
 import Home from './Home';
 import Checkout from './Checkout';
 import Login from './Login';
-import {auth} from './Firebase';
+import {auth} from './Firebase.js';
 import {useStateValue} from './StateProvider';
 import Payment from './Payment' 
 
