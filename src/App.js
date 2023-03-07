@@ -7,12 +7,20 @@ import Checkout from './Checkout';
 import Login from './Login';
 import {auth} from './Firebase.js';
 import {useStateValue} from './StateProvider';
-import Payment from './Payment' 
+import Payment from './Payment'
+import { Elements } from '@stripe/react-stripe-js'; 
+import { loadStripe } from '@stripe/stripe-js';
+import Orders from './Orders';
 
 
-function App() {
+const promise =loadStripe(
+  'pk_test_51KKmfASAhLjMG8qiCg00sIqGyaxFdMsO5ATzTquS5DKYnp8U3QhSamhfVjX61MK6gmWxXjmQ5vhewIfXME8qV4kd00VCXezkAd')
+  
+  function App() {
     const[{},dispatch]=useStateValue();
-  useEffect(()=>{
+
+
+    useEffect(()=>{
     //It only will runs after component is loaded
     auth.onAuthStateChanged(
       authUser=>{
@@ -47,9 +55,15 @@ function App() {
         <Header />
         <Checkout />
         </Route>
-        <Route path="/Payment">
+        <Route path="/orders">
+        <Header />
+        <Orders />
+        </Route>
+        <Route path="/Payments">
           <Header />
+          <Elements stripe={promise} >
           <Payment />
+          </Elements>
         </Route>
         
         <Route path="/">

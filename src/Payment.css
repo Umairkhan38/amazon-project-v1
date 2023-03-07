@@ -20,3 +20,20 @@
 .payment--address{
     flex: 0.2;
 }
+
+.payment--details {
+    flex:0.8;
+}
+
+.payment--details form{
+    margin: 10px;
+}
+
+.payment-btn{
+    padding: 8px 90px;
+    border: 1px solid #F7CA00;
+    background-color: #F7CA00 ;
+    border-radius: 8px;
+    cursor: pointer;
+
+}

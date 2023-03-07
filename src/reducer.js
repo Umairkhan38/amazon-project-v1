@@ -1,49 +1,48 @@
 export const initialState = {
-    cart: [],
-    user:null
+  cart: [],
+  user: null,
 };
 
 //Selector:
 
-export const getCartTotal = (cart) => 
-    cart?.reduce((amount, item)=> amount + item.price, 0);
-       
+export const getCartTotal = (cart) =>
+  cart?.reduce((amount, item) => amount + item.price, 0);
 
 const reducer = (state, action) => {
-    console.log(action);
-    switch (action.type) {
-        case "ADD_TO_CART":
-            return{
-                ...state,
-                cart: [...state.cart, action.item],
-            };
-            case 'REMOVE_FROM_CART':
-                let index=state.cart.findIndex((cartItem)=>cartItem.id===action.id);
-                let newcart=[...state.cart];
-                if(index>=0){
-                       
-                    newcart.splice(index,1);
+  console.log(action);
+  switch (action.type) {
+    case "ADD_TO_CART":
+      return {
+        ...state,
+        cart: [...state.cart, action.item],
+      };
+    case "REMOVE_FROM_CART":
+      let index = state.cart.findIndex((cartItem) => cartItem.id === action.id);
+      let newcart = [...state.cart];
+      if (index >= 0) {
+        newcart.splice(index, 1);
+      } else {
+        console.warn("Your Cart is Empty");
+      }
 
-                }else{
-                     console.warn("Your Cart is Empty");           
-                }
-                
-                return{
-                ...state,
-                cart:newcart,
-                };
-                case 'SET_USER':
-                return{
-                    ...state,
-                    user:action.user
-                };
+      return {
+        ...state,
+        cart: newcart,
+      };
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.user,
+      };
+    case "EMPTY_CART":
+      return {
+        ...state,
+        cart: [],
+      };
 
-                    default:
-            return state;
-    }
-
+    default:
+      return state;
+  }
 };
 
 export default reducer;
-
-

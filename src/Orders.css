@@ -1,0 +1,20 @@
+.orders{
+   background-color: #fff;
+}
+
+.orders_order{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.order{
+    border: 2px solid black;
+    text-align: center;
+    margin:5px;
+    width:80%;
+    padding:12px;
+    border-radius:12px;
+    background-color: aliceblue;
+}

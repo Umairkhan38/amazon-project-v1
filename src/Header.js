@@ -26,7 +26,7 @@ function Header() {
             </div>
             <div className="header--option">
                 <span className="header--optionLineOne">
-                    Hello,<br/>{!user ? "":user.email}
+                    Hello,<br/>{user?user?.email.split("@")[0] : "Guest"}
                 </span>
                 <span className="header--optionLineTwo">
                     Select Your Location
@@ -47,7 +47,7 @@ function Header() {
             <div className="header--nav">
                 <Link to={!user && "/login"}>
                 <div onClick={handleAuthentication}className="header--option">
-                    <span className="header--optionLineOne">Hello,<br/>{!user?"Guest":user.email}</span>
+                    <span className="header--optionLineOne">Hello,<br/>{user?user?.email.split("@")[0] : "Guest"}</span>
                     <span className="header--optionLineTwo">{user?"Sign Out":"Sign In"}</span>
                 </div>
                 </Link>

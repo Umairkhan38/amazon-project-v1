@@ -5,11 +5,13 @@
     align-items: center;
 }
 
+
 .login--logo{
     margin:20px 0px;
     object-fit: contain;
     width:100px;
 }
+
 
 .login--container{
     width: 300px;
@@ -18,13 +20,11 @@
     flex-direction: column;
     border: 4px solid rgb(243, 240, 240)ff;
     border-radius: 12px;
-    padding: 20px;
+    padding: 10px;
     background-color: white;
 }
-.login--container h2{
-    font-weight: 500;
-    margin-bottom: 20px;
-}
+
+
 .login--container h5{
     margin-bottom: 5px;
 }

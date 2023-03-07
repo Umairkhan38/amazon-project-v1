@@ -1,37 +1,33 @@
-import {React,useState,useEffect} from 'react'
-import './Payment.css';
-import {useStateValue} from './StateProvider';
-import CheckoutProduct from './CheckoutProduct';
-import { Link, useHistory } from "react-router-dom";
-import { CardElement, useStripe,useElements} from "@stripe/react-stripe-js";
+import React,{useState, useEffect} from "react";
+import "./Payment.css";
+import { useStateValue } from "./StateProvider";
+import CheckoutProduct from "./CheckoutProduct";
 import CurrencyFormat from "react-currency-format";
 import { getCartTotal } from "./reducer";
-import instance from "./axios";
-import { db } from "./Firebase.js";
+import { useElements, useStripe, CardElement } from "@stripe/react-stripe-js";
+import axios from "./axios";
+import { useHistory } from "react-router-dom";
+import {db} from './Firebase'
 
-
-
-const Payment=()=>{
+function Payment() {
   const [{ cart, user }, dispatch] = useStateValue();
-  const history = useHistory();
+  const [error,setError]=useState(null)
+  const [disable,setDisabled]=useState(true)
+  const [processing,setProcessing]=useState('')
+  const [succeeded,setSucceeded]=useState(false)
+  const [clientSecret,setClientSecret]=useState(true)
 
-  const stripe = useStripe();
-  const elements = useElements();
+  const elements=useElements()
+  const history= useHistory()
+  const stripe=useStripe();
 
-  const [succeeded, setSucceeded] = useState(false);
-  const [processing, setProcessing] = useState("");
-  const [error, setError] = useState(null);
-  const [disabled, setDisabled] = useState(true);
-  const [clientSecret, setClientSecret] = useState(true);
-
-  
   useEffect(() => {
     // generate the special stripe secret which allows us to charge a customer
     const getClientSecret = async () => {
-      const response = await instance({
+      const response = await axios({
         method: "post",
         // Stripe expects the total in a currencies subunits in Paise
-        url: `/payments/create?total=${getCartTotal(cart) * 100}`,
+        url:`/payments/create?total=${getCartTotal(cart) * 100}`,
       });
       setClientSecret(response.data.clientSecret);
     };
@@ -87,25 +83,36 @@ const Payment=()=>{
 
   return (
     <div className="payment">
+      {/* Customer's Address */}
       <div className="payment--container">
-        {/* Payment section - delivery address */}
         <div className="payment--section">
-          <div className="payment--title">
-            <h3>Delivery Address:</h3>
-          </div>
           <div className="payment--address">
+            <h3>Delivery Address</h3>
             <p>
-              {user?.email}, Room No. 69, Shady Apartments, Thane, Navi Mumbai -
-              400 701.
+              <i>{user?user?.email.split("@")[0] : "Guest"}</i>
             </p>
+            <p>Mumbai</p>
+            <p>Bandra</p>
           </div>
+          <CurrencyFormat
+            renderText={(value) => (
+              <>
+                <h4 style={{ margin: "auto" }}>
+                  Total Payment of <small>({cart?.length} items)</small> :{" "}
+                  <h4>{value}/-</h4>{" "}
+                </h4>
+              </>
+            )}
+            decimalScale={2}
+            value={getCartTotal(cart)}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"₹"}
+          />
         </div>
-
-        {/* Payment section - Review Items */}
+        {/* Cart Review */}
         <div className="payment--section">
-          <div className="payment--title">
-            <h3>Review items and delivery:</h3>
-          </div>
+          <h3>Review Your Product Details:</h3>
           <div className="payment--items">
             {cart.map((item) => (
               <CheckoutProduct
@@ -113,42 +120,33 @@ const Payment=()=>{
                 title={item.title}
                 image={item.image}
                 price={item.price}
-                rating={item.rating}
               />
             ))}
           </div>
         </div>
-
-        {/* Payment section - Payment method */}
         <div className="payment--section">
-          <div className="payment--title">
-            <h3>Payment Method:</h3>
-          </div>
+          <h2>Payment Method:</h2>
           <div className="payment--details">
-            {/* Stripe magic will go */}
-
             <form onSubmit={handleSubmit}>
               <CardElement onChange={handleChange} />
-              
               <div className="payment__priceContainer">
-                <CurrencyFormat
-                  renderText={(value) => <h3>Order Total: {value}</h3>}
-                  decimalScale={2}
-                  value={getCartTotal(cart)}
-                  displayType={"text"}
-                  thousandSeparator={true}
-                  prefix={"₹"}
-                />
-                <button
-                  className="buynow--button"
-                  disabled={processing || disabled || succeeded}
-                >
-                  <span>{processing ? <p>Processing</p> : "Pay Now"}</span>
-                </button>
+              <CurrencyFormat
+            renderText={(value) => (
+              <>
+                <h4 style={{ margin: "auto" }}>
+                  Order Total : <span>{value}/-</span>
+                </h4>
+              </>
+            )}
+            decimalScale={2}
+            value={getCartTotal(cart)}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"₹"}
+          />
+            <button className="payment-btn" disabled={processing || disable || succeeded}><span>{processing?<p>Processing...</p>:<p>Buy Now</p>}</span></button>
               </div>
-
-              {/* Errors */}
-              {error && <div>{error}</div>}
+              {error&&<div>{error}</div>}
             </form>
           </div>
         </div>
@@ -158,4 +156,3 @@ const Payment=()=>{
 }
 
 export default Payment;
-
